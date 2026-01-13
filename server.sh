@@ -54,8 +54,9 @@ function DownloadAndExtractServer() {
     unzip -o hytale-downloader.zip -d "${SCRIPT_DIR}"
     rm hytale-downloader.zip hytale-downloader-windows-amd64.exe QUICKSTART.md
     mv hytale-downloader-linux-amd64 hytale-downloader
+    chmod +x hytale-downloader
     echo "Running Hytale Server Downloader..."
-    hytale-downloader -download-path hytale_server.zip
+    ./hytale-downloader -download-path hytale_server.zip
     unzip hytale_server.zip
     mv Server/HytaleServer.jar .
     mv Server/HytaleServer.aot .
@@ -65,7 +66,6 @@ function DownloadAndExtractServer() {
 }
 
 function readJavaOpts() {
-    # This has to return a value
     if [ -f java-opts.txt ]; then
         cat java-opts.txt
     else
@@ -74,7 +74,6 @@ function readJavaOpts() {
 }
 
 function readHytaleOpts() {
-    # This has to return a value
     if [ -f hytale-opts.txt ]; then
         cat hytale-opts.txt
     else
@@ -99,5 +98,9 @@ fi
 
 FINAL_JAVA_OPS="-XX:AOTCache=HytaleServer.aot -Xms128M -Xmx${CONFIG_MAX_RAM} $(readJavaOpts) -jar HytaleServer.jar"
 FINAL_HYTALE_OPS="--assets Assets.zip --auth-mode authenticated $(readHytaleOpts) --bind 0.0.0.0:${CONFIG_SERVER_PORT}"
+
+echo "Starting Hytale Server with the following parameters: "
+echo "Java options: ${FINAL_JAVA_OPS}"
+echo "Hytale options: ${FINAL_HYTALE_OPS}"
 
 java ${FINAL_JAVA_OPS} ${FINAL_HYTALE_OPS}
