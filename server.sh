@@ -3,8 +3,6 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 HYTALE_SERVER_DOWNLOADER_URL="https://downloader.hytale.com/hytale-downloader.zip"
 
-INSTALL_PATH="/mnt/server"
-
 LOGIC_INSTALL_ENV=false
 LOGIC_LAUNCH_SRV=true
 LOGIC_AUTO_UPDATE=false
@@ -50,6 +48,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 function DownloadAndExtractServer() {
+    cd "${SCRIPT_DIR}"
     echo "Downloading Hytale Server..."
     wget -q --show-progress -O hytale-downloader.zip "${HYTALE_SERVER_DOWNLOADER_URL}"
     echo "Extracting Hytale Server..."
@@ -84,7 +83,6 @@ function readHytaleOpts() {
 }
 
 if [ "${LOGIC_INSTALL_ENV}" = true ]; then
-    cd "${INSTALL_PATH}"
     DownloadAndExtractServer
     echo "Installation completed. You can now run the server."
     echo "${JAVA_OPS}" >> java-opts.txt
