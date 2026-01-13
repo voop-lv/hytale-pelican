@@ -11,7 +11,7 @@ CONFIG_MAX_RAM="2048M"
 CONFIG_SERVER_PORT="25565"
 
 JAVA_OPS="-XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true"
-HYTALE_OPS="--auth-mode authenticated --accept-early-plugins"
+HYTALE_OPS="--accept-early-plugins"
 
 while [[ $# -gt 0 ]]; do
     key="$1"
